@@ -1,8 +1,11 @@
 package StepDefinition;		
 
 import org.openqa.selenium.By;		
-import org.openqa.selenium.WebDriver;		
-import org.openqa.selenium.chrome.ChromeDriver;	
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import cucumber.api.java.en.Given;		
 import cucumber.api.java.en.Then;		
@@ -20,20 +23,36 @@ public class Steps {
     	System.setProperty("webdriver.chrome.driver", PATH_TO_CHROME_DRIVER);
     	driver= new ChromeDriver();					
     	driver.manage().window().maximize();			
-    	driver.get("http://demo.guru99.com/v4");					
+    	driver.get("https://mail.google.com/");					
     }		
 
     @When("^Enter the Username \"(.*)\" and Password \"(.*)\"$")			
     public void enter_the_Username_and_Password(String username,String password) throws Throwable 							
     {		
-    	driver.findElement(By.name("uid")).sendKeys(username);					
-    	driver.findElement(By.name("password")).sendKeys(password);					
+    	driver.findElement(By.id("identifierId")).sendKeys("williamtestuse");
+        driver.findElement(By.id("identifierNext")).click();        
+        
+        WebElement pwdIn = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
+        pwdIn.sendKeys("!1qaz@2wsx");
+        WebElement pwdButton = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("passwordNext")));        
+        pwdButton.click();		
+        
+        
+        Boolean ifInbox = (new WebDriverWait(driver, 10)).until(ExpectedConditions.urlMatches("https://mail.google.com/mail/#inbox"));
+        if(ifInbox) {
+        	driver.get("https://mail.google.com/mail/#inbox?compose=new");
+        }
+        WebElement to = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("to")));
+        to.sendKeys("williamin18@gmail.com");
+        
+        WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
+        subject.sendKeys("ecse 428 a2 test");
     }		
 
     @Then("^Reset the credential$")					
     public void	Reset_the_credential() throws Throwable 							
     {		
-    	driver.findElement(By.name("btnReset")).click();
+    	//driver.findElement(By.name("btnReset")).click();
     	driver.close();
     } 
 }		
