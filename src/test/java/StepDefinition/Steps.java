@@ -49,6 +49,9 @@ public class Steps {
         
         WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
         subject.sendKeys("ecse 428 a2 test");
+        
+        WebElement send = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Send']")));
+        send.click();
     }		
 
     @Then("^Reset the credential$")					
