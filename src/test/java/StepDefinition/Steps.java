@@ -70,6 +70,13 @@ public class Steps {
         subject.sendKeys(SUBJECT);
     }
     
+    @And("^I don't enter the subject$")
+    public void dont_enter_the_subject() throws Throwable
+    {
+    	WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
+        subject.sendKeys("");
+    }
+    
     @And("^I attach a file \"(.*)\" to the email$")
     public void attach_a_file_to_the_email(String number) throws Throwable
     {
