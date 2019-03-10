@@ -81,6 +81,7 @@ public class Steps {
         subject.sendKeys("");     
     }
     
+    
     @And("^I confirm to send the email without a subject or text$")
     public void confirm_to_send_the_email_without_a_subject_or_text() throws Throwable
     {
@@ -116,6 +117,12 @@ public class Steps {
     @Then("^there should be a an error saying I can not send an email without a recipient$")
     public void send_uncuccessfully() throws Throwable
     {
+    	WebElement failButton = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("ok")));
+    	WebElement errorMessage = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='Kj-JD-Jz']")));
+    	System.out.println(errorMessage.getText());
+    	failButton.click();
+    	
+        
     	backToInitialState();
     }
     
