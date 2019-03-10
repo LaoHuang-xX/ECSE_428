@@ -29,8 +29,8 @@ Feature: Send an emial with an attachment
    	
 	Examples:  
    	                    		
-	|recipient  									|subject           			|number           |		
-	|williamin18@gmail.com    	  |ecse 428 a2 test 1			|1								|	
+	|recipient										|subject								|number						|		
+	|williamin18@gmail.com				|ecse 428 a2 test 1			|1								|	
 	|xu.hai@mail.mcgill.ca				|ecse 428 a2 test 2			|2								|
 	
 	Scenario Outline: Verification of sending an email which contains both the subject and an attachment with numbers of credential
@@ -45,8 +45,8 @@ Feature: Send an emial with an attachment
    	
 	Examples:  
    	                    		
-	|recipient  									|number           |		
-	|williamin18@gmail.com    	  |1								|	
+	|recipient										|number						|		
+	|williamin18@gmail.com				|1								|	
 	|xu.hai@mail.mcgill.ca				|2								|
 #|User2     |password2        |		
 #|User3     |password3        |
