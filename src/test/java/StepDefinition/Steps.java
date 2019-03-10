@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;		
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,15 +46,16 @@ public class Steps {
         pwdIn.sendKeys(PASSWORD);
         WebElement pwdButton = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("passwordNext")));        
         pwdButton.click();	
+        new WebDriverWait(driver, 10).until(ExpectedConditions.urlMatches("https://mail.google.com/mail/#inbox"));
+
     }		
 
     @When("^I select 'Compose'$")
     public void select_compose() throws Throwable 							
     {	
-        Boolean ifInbox = (new WebDriverWait(driver, 10)).until(ExpectedConditions.urlMatches("https://mail.google.com/mail/#inbox"));
-        if(ifInbox) {
-        	driver.get("https://mail.google.com/mail/#inbox?compose=new");
-        }
+        
+        driver.get("https://mail.google.com/mail/#inbox?compose=new");
+        
     }	
     
     @And("^I enter the recipient's \"(.*)\" email address$")
@@ -75,6 +77,9 @@ public class Steps {
     {
     	WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
         subject.sendKeys("");
+        
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
     }
     
     @And("^I attach a file \"(.*)\" to the email$")
