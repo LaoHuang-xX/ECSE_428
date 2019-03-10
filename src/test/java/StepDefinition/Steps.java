@@ -11,7 +11,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import cucumber.api.java.en.Given;		
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;		
 import cucumber.api.java.en.When;		
 
@@ -20,65 +21,70 @@ public class Steps {
 	private final String PATH_TO_CHROME_DRIVER = System.getProperty("user.dir") + "\\driver\\chromedriver.exe";
 	private final String USER_NAME = "williamtestuse";
 	private final String PASSWORD = "!1qaz@2wsx";
+	private final String SUBJECT = "ecse 428 a2 test";
 
     WebDriver driver;			
     		
-    @Given("^Open the Firefox and launch the application$")					
+    @Given("^I am logged in$")					
     public void open_the_Firefox_and_launch_the_application() throws Throwable							
     {		
-    	System.setProperty("webdriver.chrome.driver", PATH_TO_CHROME_DRIVER);
-    	driver= new ChromeDriver();					
+    	if (driver == null) {
+            System.setProperty("webdriver.chrome.driver", PATH_TO_CHROME_DRIVER);
+            driver = new ChromeDriver();
+            System.out.print("ChromeDriver has been setted up\n");
+        }
     	driver.manage().window().maximize();			
-    	driver.get("https://mail.google.com/");					
-    }		
-
-    @When("^Enter the Username \"(.*)\" and Password \"(.*)\"$")			
-    public void enter_the_Username_and_Password(String username,String password) throws Throwable 							
-    {		
+    	driver.get("https://mail.google.com/");
+    	
     	driver.findElement(By.id("identifierId")).sendKeys(USER_NAME);
         driver.findElement(By.id("identifierNext")).click();        
         
         WebElement pwdIn = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
         pwdIn.sendKeys(PASSWORD);
         WebElement pwdButton = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("passwordNext")));        
-        pwdButton.click();		
-        
-        
+        pwdButton.click();	
+    }		
+
+    @When("^I select 'Compose'$")
+    public void select_compose() throws Throwable 							
+    {	
         Boolean ifInbox = (new WebDriverWait(driver, 10)).until(ExpectedConditions.urlMatches("https://mail.google.com/mail/#inbox"));
         if(ifInbox) {
         	driver.get("https://mail.google.com/mail/#inbox?compose=new");
         }
-        
-        WebElement to = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("to")));
-        to.sendKeys("williamin18@gmail.com");
-        
-        WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
-        subject.sendKeys("ecse 428 a2 test");
-        
-        WebElement attach = driver.findElement(By.cssSelector("div[class='a1 aaA aMZ']"));
+    }	
+    
+    @And("^I enter the recipient's \"(.*)\" email address$")
+    public void enter_the_recipient_email_address(String recipient) throws Throwable
+    {
+    	WebElement to = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("to")));
+        to.sendKeys(recipient);
+    }
+    
+    @And("^I enter the subject$")
+    public void enter_the_subject() throws Throwable
+    {
+    	WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
+        subject.sendKeys(SUBJECT);
+    }
+    
+    @And("^I attach a file \"(.*)\" to the email$")
+    public void attach_a_file_to_the_email(String number) throws Throwable
+    {
+    	WebElement attach = driver.findElement(By.cssSelector("div[class='a1 aaA aMZ']"));
         attach.click();
-     
-        try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        type(4);
-       new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.name("attach")));
-
+        int id = Integer.parseInt(number);
         
-       WebElement send = (new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Send']")));
-       send.click();
         
-
-    }		
-
-    @Then("^Reset the credential$")					
-    public void	Reset_the_credential() throws Throwable 							
-    {		
-    	//driver.findElement(By.name("btnReset")).click();
-    	driver.close();
+        type(Integer.parseInt(number));
+        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.name("attach")));
+    }
+    
+    @And("^I select 'Send'$")
+    public void select_send() throws Throwable
+    {
+    	WebElement send = (new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Send']")));
+        send.click();
     }
     
     private void type(int fileID) {//type different file name
@@ -111,7 +117,6 @@ public class Steps {
 			r.keyPress(KeyEvent.VK_ENTER);
 			r.keyRelease(KeyEvent.VK_ENTER);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

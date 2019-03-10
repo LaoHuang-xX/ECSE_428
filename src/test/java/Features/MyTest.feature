@@ -17,18 +17,26 @@
 ## (Comments)
 #Sample Feature Definition Template
 
-Feature: Reset functionality on login page of Application 
-Scenario Outline: Verification of reset button with numbers of credential
-Given Open the Firefox and launch the application
+Feature: Send an emial with an attachment 
+Scenario Outline: Verification of sending an email with an attachment with numbers of credential
+Given I am logged in
 
-When Enter the Username "<username>" and Password "<password>"
+When I select 'Compose'
 
-Then Reset the credential
+And I enter the recipient's "<recipient>" email address
+
+And I enter the subject
+
+And I attach a file "<number>" to the email
+
+And I select 'Send'
+
+#Then Reset the credential
    	
 Examples:  
    	                    		
-|username  					|password         |		
-|williamtestuse     |!1qaz@2wsx       |		
+|recipient  									|number           |		
+|williamin18@gmail.com    	  |1   					    |		
 #|User2     |password2        |		
 #|User3     |password3        |
 
