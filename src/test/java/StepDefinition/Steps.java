@@ -85,6 +85,9 @@ public class Steps {
     {
     	WebElement send = (new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Send']")));
         send.click();
+        
+        WebElement submitted = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Message sent.']")));
+        System.out.println(submitted.getText());
     }
     
     private void type(int fileID) {//type different file name
