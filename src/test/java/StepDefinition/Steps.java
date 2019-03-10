@@ -22,7 +22,6 @@ public class Steps {
 	private final String PATH_TO_CHROME_DRIVER = System.getProperty("user.dir") + "\\driver\\chromedriver.exe";
 	private final String USER_NAME = "williamtestuse";
 	private final String PASSWORD = "!1qaz@2wsx";
-	private final String SUBJECT = "ecse 428 a2 test";
 
     WebDriver driver;			
     		
@@ -52,10 +51,8 @@ public class Steps {
 
     @When("^I select 'Compose'$")
     public void select_compose() throws Throwable 							
-    {	
-        
-        driver.get("https://mail.google.com/mail/#inbox?compose=new");
-        
+    {	  
+        driver.get("https://mail.google.com/mail/#inbox?compose=new");        
     }	
     
     @And("^I enter the recipient's \"(.*)\" email address$")
@@ -65,20 +62,24 @@ public class Steps {
         to.sendKeys(recipient);
     }
     
-    @And("^I enter the subject$")
-    public void enter_the_subject() throws Throwable
+    @And("^I enter the subject \"(.*)\"$")
+    public void enter_the_subject(String title) throws Throwable
     {
     	WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
-        subject.sendKeys(SUBJECT);
+        subject.sendKeys(title);
     }
     
-    @And("^I don't enter the subject$")
+    @And("^I do not enter the subject$")
     public void dont_enter_the_subject() throws Throwable
     {
     	WebElement subject = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("subjectbox")));
-        subject.sendKeys("");
-        
-        Alert alert = driver.switchTo().alert();
+        subject.sendKeys("");     
+    }
+    
+    @And("^I confirm to send the email without a subject or text$")
+    public void confirm_to_send_the_email_without_a_subject_or_text() throws Throwable
+    {
+    	Alert alert = driver.switchTo().alert();
         alert.accept();
     }
     
@@ -99,11 +100,12 @@ public class Steps {
         send.click();        
     }
     
-    @Then("^the email should be sent and I should be able to share my files with others$")
+    @Then("^there should be a window saying the email has been sent and I should be able to share my files with others$")
     public void send_successfully() throws Throwable
     {
     	WebElement submitted = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Message sent.']")));
         System.out.println(submitted.getText());
+        driver.quit();
     }
     
     private void type(int fileID) {//type different file name
