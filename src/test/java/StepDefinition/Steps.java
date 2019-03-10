@@ -3,6 +3,7 @@ package StepDefinition;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;		
@@ -110,6 +111,13 @@ public class Steps {
     
     private void type(int fileID) {//type different file name
     	try {
+			Runtime.getRuntime().exec("fileUpload\\fileUpload"+fileID+".exe");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	/*
+    	try {
 			Robot r = new Robot();
 			r.keyPress(KeyEvent.VK_SHIFT);
 			r.keyPress(KeyEvent.VK_C);
@@ -140,5 +148,6 @@ public class Steps {
 		} catch (AWTException e) {
 			e.printStackTrace();
 		}
+		*/
     }
 }		
