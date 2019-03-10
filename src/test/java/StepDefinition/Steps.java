@@ -27,12 +27,14 @@ public class Steps {
     		
     @Given("^I am logged in$")					
     public void open_the_Firefox_and_launch_the_application() throws Throwable							
-    {		
+    {	
+    	
     	if (driver == null) {
             System.setProperty("webdriver.chrome.driver", PATH_TO_CHROME_DRIVER);
             driver = new ChromeDriver();
             System.out.print("ChromeDriver has been setted up\n");
         }
+    	
     	driver.manage().window().maximize();			
     	driver.get("https://mail.google.com/");
     	
@@ -73,8 +75,6 @@ public class Steps {
     {
     	WebElement attach = driver.findElement(By.cssSelector("div[class='a1 aaA aMZ']"));
         attach.click();
-        int id = Integer.parseInt(number);
-        
         
         type(Integer.parseInt(number));
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.name("attach")));

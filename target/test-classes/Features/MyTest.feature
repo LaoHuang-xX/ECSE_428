@@ -36,7 +36,8 @@ And I select 'Send'
 Examples:  
    	                    		
 |recipient  									|number           |		
-|williamin18@gmail.com    	  |1   					    |		
+|williamin18@gmail.com    	  |1   					    |	
+|xu.hai@mail.mcgill.ca				|2								|	
 #|User2     |password2        |		
 #|User3     |password3        |
 
