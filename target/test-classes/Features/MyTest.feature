@@ -27,8 +27,8 @@ Then Reset the credential
    	
 Examples:  
    	                    		
-|username  |password         |		
-|User1     |password1        |		
+|username  					|password         |		
+|williamtestuse     |!1qaz@2wsx       |		
 #|User2     |password2        |		
 #|User3     |password3        |
 

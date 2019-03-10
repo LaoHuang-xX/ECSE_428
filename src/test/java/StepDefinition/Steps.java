@@ -14,6 +14,8 @@ import cucumber.api.java.en.When;
 public class Steps {
 	
 	private final String PATH_TO_CHROME_DRIVER = System.getProperty("user.dir") + "\\driver\\chromedriver.exe";
+	private final String USER_NAME = "williamtestuse";
+	private final String PASSWORD = "!1qaz@2wsx";
 
     WebDriver driver;			
     		
@@ -29,11 +31,11 @@ public class Steps {
     @When("^Enter the Username \"(.*)\" and Password \"(.*)\"$")			
     public void enter_the_Username_and_Password(String username,String password) throws Throwable 							
     {		
-    	driver.findElement(By.id("identifierId")).sendKeys("williamtestuse");
+    	driver.findElement(By.id("identifierId")).sendKeys(USER_NAME);
         driver.findElement(By.id("identifierNext")).click();        
         
         WebElement pwdIn = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
-        pwdIn.sendKeys("!1qaz@2wsx");
+        pwdIn.sendKeys(PASSWORD);
         WebElement pwdButton = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("passwordNext")));        
         pwdButton.click();		
         
