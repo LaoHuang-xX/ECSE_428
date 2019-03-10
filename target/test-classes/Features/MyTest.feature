@@ -32,6 +32,10 @@ Feature: Send an emial with an attachment
 	|recipient										|subject								|number						|		
 	|williamin18@gmail.com				|ecse 428 a2 test 1			|1								|	
 	|xu.hai@mail.mcgill.ca				|ecse 428 a2 test 2			|2								|
+	|ziyuan.wang@mail.mcgill.ca		|ecse 428 a2 test 3			|3								|
+	|609437851@qq.com							|ecse 428 a2 test 4			|4								|
+	|tieshan.lyu@gmail.com				|ecse 428 a2 test 5			|5								|
+	
 	
 	Scenario Outline: Verification of sending an email which contains both the subject and an attachment with numbers of credential
 		Given I am logged in
@@ -48,6 +52,9 @@ Feature: Send an emial with an attachment
 	|recipient										|number						|		
 	|williamin18@gmail.com				|1								|	
 	|xu.hai@mail.mcgill.ca				|2								|
+	|ziyuan.wang@mail.mcgill.ca		|3								|
+	|609437851@qq.com							|4								|
+	|tieshan.lyu@gmail.com				|5								|
 #|User2     |password2        |		
 #|User3     |password3        |
 
