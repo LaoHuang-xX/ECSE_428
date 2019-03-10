@@ -1,4 +1,4 @@
-#Author: your.email@your.domain.com
+#Author: xu.hai@mail.mcgill.ca & ziyuan.wang@mail.mcgill.ca
 #Keywords Summary :
 #Feature: List of scenarios.
 #Scenario: Business rule through list of steps with arguments.
@@ -18,6 +18,8 @@
 #Sample Feature Definition Template
 
 Feature: Send an emial with an attachment 
+
+	# Nornal Flow
 	Scenario Outline: Verification of sending an email which contains both the subject and an attachment with numbers of credential
 		Given I am logged in
 		When I select 'Compose'
@@ -26,7 +28,8 @@ Feature: Send an emial with an attachment
 		And I attach a file "<number>" to the email
 		And I select 'Send'
 		Then there should be a window saying the email has been sent and I should be able to share my files with others
-   	
+  
+  # Data for normal flow 	
 	Examples:  
    	                    		
 	|recipient										|subject								|number						|		
@@ -36,7 +39,7 @@ Feature: Send an emial with an attachment
 	|609437851@qq.com							|ecse 428 a2 test 4			|4								|
 	|tieshan.lyu@gmail.com				|ecse 428 a2 test 5			|5								|
 	
-	
+	# Alternative Flow
 	Scenario Outline: Verification of sending an email which contains both the subject and an attachment with numbers of credential
 		Given I am logged in
 		When I select 'Compose'
@@ -46,7 +49,8 @@ Feature: Send an emial with an attachment
 		And I select 'Send'
 		And I confirm to send the email without a subject or text
 		Then there should be a window saying the email has been sent and I should be able to share my files with others
-   	
+  
+  # Data for alternative flow 	
 	Examples:  
    	                    		
 	|recipient										|number						|		
@@ -55,6 +59,25 @@ Feature: Send an emial with an attachment
 	|ziyuan.wang@mail.mcgill.ca		|3								|
 	|609437851@qq.com							|4								|
 	|tieshan.lyu@gmail.com				|5								|
-#|User2     |password2        |		
-#|User3     |password3        |
+	
+	# Error Flow
+	Scenario Outline: Verification of sending an email which contains both the subject and an attachment with numbers of credential
+		Given I am logged in
+		When I select 'Compose'
+		And I do not enter the recipient's email address
+		And I enter the subject "<subject>"
+		And I attach a file "<number>" to the email
+		And I select 'Send'
+		Then there should be a an error saying I can not send an email without a recipient
+  
+  # Data for error flow 	
+	Examples:  
+   	                    		
+	|subject								|number						|		
+	|ecse 428 a2 test 1			|1								|	
+	|ecse 428 a2 test 2			|2								|
+	|ecse 428 a2 test 3			|3								|
+	|ecse 428 a2 test 4			|4								|
+	|ecse 428 a2 test 5			|5								|
+	
 

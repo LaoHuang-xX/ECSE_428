@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;		
@@ -30,11 +31,7 @@ public class Steps {
     public void open_the_Firefox_and_launch_the_application() throws Throwable							
     {	
     	
-    	if (driver == null) {
-            System.setProperty("webdriver.chrome.driver", PATH_TO_CHROME_DRIVER);
-            driver = new ChromeDriver();
-            System.out.print("ChromeDriver has been setted up\n");
-        }
+    	checkInitialState();
     	
     	driver.manage().window().maximize();			
     	driver.get("https://mail.google.com/");
@@ -61,6 +58,13 @@ public class Steps {
     {
     	WebElement to = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("to")));
         to.sendKeys(recipient);
+    }
+    
+    @And("^I do not enter the recipient's email address$")
+    public void do_not_enter_the_recipient_email_address() throws Throwable
+    {
+    	WebElement to = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.name("to")));
+        to.sendKeys("");
     }
     
     @And("^I enter the subject \"(.*)\"$")
@@ -90,7 +94,7 @@ public class Steps {
     	WebElement attach = driver.findElement(By.cssSelector("div[class='a1 aaA aMZ']"));
         attach.click();
         
-        type(Integer.parseInt(number));
+        attach(Integer.parseInt(number));
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(By.name("attach")));
     }
     
@@ -106,14 +110,20 @@ public class Steps {
     {
     	WebElement submitted = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Message sent.']")));
         System.out.println(submitted.getText());
-        driver.quit();
+        backToInitialState();
     }
     
-    private void type(int fileID) {//type different file name
+    @Then("^there should be a an error saying I can not send an email without a recipient$")
+    public void send_uncuccessfully() throws Throwable
+    {
+    	backToInitialState();
+    }
+    
+    // The helper method to attach files
+    private void attach(int fileID) {
     	try {
 			Runtime.getRuntime().exec("fileUpload\\fileUpload"+fileID+".exe");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	/*
@@ -149,5 +159,23 @@ public class Steps {
 			e.printStackTrace();
 		}
 		*/
+    }
+    
+    // The method to confirm the system is in appropriate initial state before tests are run
+    private void checkInitialState() throws MalformedURLException {
+    	if (driver == null) {
+    		System.out.println("Get into the initial state..\n");
+    		System.setProperty("webdriver.chrome.driver", PATH_TO_CHROME_DRIVER);
+            driver = new ChromeDriver();
+            System.out.print("Initial setup has been finished!\n");
+    	}
+    }
+    
+    // The method to ensure the system is returned to the initial state after tests are run
+    private void backToInitialState() throws Throwable {
+    	if (driver != null) {
+	    	System.out.println("Return the system to the initial state..");
+	    	driver.quit();
+    	}
     }
 }		
