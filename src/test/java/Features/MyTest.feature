@@ -31,7 +31,7 @@ And I attach a file "<number>" to the email
 
 And I select 'Send'
 
-#Then Reset the credential
+Then the email should be sent and I should be able to share my files with others
    	
 Examples:  
    	                    		

@@ -84,9 +84,13 @@ public class Steps {
     public void select_send() throws Throwable
     {
     	WebElement send = (new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[text()='Send']")));
-        send.click();
-        
-        WebElement submitted = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Message sent.']")));
+        send.click();        
+    }
+    
+    @Then("^the email should be sent and I should be able to share my files with others$")
+    public void send_successfully() throws Throwable
+    {
+    	WebElement submitted = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='Message sent.']")));
         System.out.println(submitted.getText());
     }
     
